@@ -16,5 +16,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.5.3      
 
-      - name: 'Restore'
-        run: hello world
+      
+      - name: 'Build'
+        run: dotnet build --configuration ${{ env.BUILD_CONF }}
+
+      - name: 'Publish'
+        run: dotnet publish --configuration ${{ env.BUILD_CONF }} -o ./webstore
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: webstore
+          path: ./webstore
