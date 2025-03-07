@@ -51,8 +51,11 @@
 
 name: webstore-cicd
 
-on:
+on: 
   workflow_dispatch:
+  pull_request:
+    branches: 
+      - main 
 
 env:
   AZURE_WEBAPP_NAME: 'web1-ausemart-app'    
