@@ -27,3 +27,23 @@ jobs:
           name: webstore
           path: ./webstore
           retention-days: 5
+
+  deploy: 
+    name: Deploy to Web App
+    runs-on: ubuntu-latest
+    environment:
+      name: webstore-prod
+
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+            path: ./artifacts 
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: webstore
+          path: webstore
+
+      - name: Display structure of downloaded files
+        run: ls -R
