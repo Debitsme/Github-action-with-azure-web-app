@@ -17,3 +17,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: webstore
+          path: webstores
+
+      - name: Display structure of downloaded files
+        run: ls -R
