@@ -26,3 +26,4 @@ jobs:
         with:
           name: webstore
           path: ./webstore
+          retention-days: 5
