@@ -31,8 +31,8 @@ jobs:
   deploy: 
     name: Deploy to Web App
     runs-on: ubuntu-latest
-    environment:
-      name: webstore-prod
+    # environment:
+    #   name: webstore-prod
 
     steps:
       - name: Download All Artifacts
