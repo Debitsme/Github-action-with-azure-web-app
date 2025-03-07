@@ -1,0 +1,50 @@
+# name: Building the .net application
+# runs-on: ubuntu-latest
+# on: 
+#   workflow_dispatch:
+#   pull_request:
+#     branches: 
+#       - main 
+
+# jobs:
+#   build:
+#     name: 'Build and Publish .NET Web App'
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4      
+
+      
+#       - name: 'Build'
+#         run: dotnet build --configuration Release
+
+#       - name: 'Publish'
+#         run: dotnet publish --configuration Release -o ./webstore
+
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: webstore
+#           path: ./webstore
+#           retention-days: 5
+
+#   deploy: 
+#     name: Deploy to Web App
+#     # environment:
+#     #   name: webstore-prod
+
+#     steps:
+#       - name: Download All Artifacts
+#         uses: actions/download-artifact@v4
+#         with:
+#             path: ./artifacts 
+#       - name: Download artifact from build job
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: webstore
+#           path: webstore
+
+#       - name: Display structure of downloaded files
+#         run: ls -R
+
+# Build and Deploy to Azure

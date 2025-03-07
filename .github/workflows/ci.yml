@@ -1,9 +1,13 @@
-name: Building the .net application
+name: Azure Web App CI/CD
+
 on: 
   workflow_dispatch:
   pull_request:
     branches: 
       - main 
+
+env:
+  AZURE_WEBAPP_NAME: 'web1-ausemart-app'    
 
 jobs:
   build:
@@ -12,9 +16,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4      
+        uses: actions/checkout@v4     
 
-      
+      - name: 'Restore'
+        run: dotnet restore
+
       - name: 'Build'
         run: dotnet build --configuration Release
 
@@ -26,4 +32,23 @@ jobs:
         with:
           name: webstore
           path: ./webstore
-          retention-days: 5
+
+  deploy: 
+    name: Deploy to Web App
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: webstore-prod
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: webstore
+      
+      # - name: Deploy to Azure Web App   # to push if you have the azure web app publish profile
+      # uses: azure/webapps-deploy@v2
+      # with: 
+      #   app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #   package: .
