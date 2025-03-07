@@ -1,10 +1,9 @@
 name: "deploying artifacts to azure web app"
 on:
-  workflow_run:
+  workflow_run: # Trigger the workflow on the completion of the build workflow
     workflows: ["Building the .net application"]
     types:
       - completed
-  workflow_dispatch:
 
 jobs:
   deploy: 
