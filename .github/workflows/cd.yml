@@ -1,15 +1,9 @@
 name: "deploying artifacts to azure web app"
 on:
-  push:
-  workflow_run:
+  workflow_run: # Trigger the workflow on the completion of the build workflow
     workflows: ["Building the .net application"]
     types:
       - completed
-    branches:
-      - main
-  workflow_dispatch:
-    branches:
-      - main
 
 jobs:
   deploy: 
