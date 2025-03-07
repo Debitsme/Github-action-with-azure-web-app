@@ -1,12 +1,10 @@
 name: "deploying artifacts to azure web app"
 on:
-  push:
   workflow_run:
     workflows: ["Building the .net application"]
     types:
       - completed
-    branches:
-      - main
+  push:
   workflow_dispatch:
 
 jobs:
