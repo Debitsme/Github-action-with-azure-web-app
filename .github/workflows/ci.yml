@@ -1,9 +1,61 @@
-name: Building the .net application
-on: 
+# name: Building the .net application
+# runs-on: ubuntu-latest
+# on: 
+#   workflow_dispatch:
+#   pull_request:
+#     branches: 
+#       - main 
+
+# jobs:
+#   build:
+#     name: 'Build and Publish .NET Web App'
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4      
+
+      
+#       - name: 'Build'
+#         run: dotnet build --configuration Release
+
+#       - name: 'Publish'
+#         run: dotnet publish --configuration Release -o ./webstore
+
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: webstore
+#           path: ./webstore
+#           retention-days: 5
+
+#   deploy: 
+#     name: Deploy to Web App
+#     # environment:
+#     #   name: webstore-prod
+
+#     steps:
+#       - name: Download All Artifacts
+#         uses: actions/download-artifact@v4
+#         with:
+#             path: ./artifacts 
+#       - name: Download artifact from build job
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: webstore
+#           path: webstore
+
+#       - name: Display structure of downloaded files
+#         run: ls -R
+
+# Build and Deploy to Azure
+
+name: webstore-cicd
+
+on:
   workflow_dispatch:
-  pull_request:
-    branches: 
-      - main 
+
+env:
+  AZURE_WEBAPP_NAME: 'web1-ausemart-app'    
 
 jobs:
   build:
@@ -12,9 +64,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4      
+        uses: actions/checkout@v3.4     
 
-      
+      - name: 'Restore'
+        run: dotnet restore
+
       - name: 'Build'
         run: dotnet build --configuration Release
 
@@ -22,28 +76,20 @@ jobs:
         run: dotnet publish --configuration Release -o ./webstore
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: webstore
           path: ./webstore
-          retention-days: 5
 
   deploy: 
     name: Deploy to Web App
     runs-on: ubuntu-latest
-    # environment:
-    #   name: webstore-prod
+    needs: build
+    environment:
+      name: webstore-prod
 
     steps:
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        with:
-            path: ./artifacts 
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: webstore
-          path: webstore
-
-      - name: Display structure of downloaded files
-        run: ls -R
