@@ -4,7 +4,6 @@ on:
     workflows: ["Building the .net application"]
     types:
       - completed
-  push:
   workflow_dispatch:
 
 jobs:
